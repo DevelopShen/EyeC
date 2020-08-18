@@ -1,0 +1,21 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/dark_dark_blue</item>
+    </style>
+    <style name="RegisterContact" parent="Theme.AppCompat.DayNight.DarkActionBar">
+        <item name="colorPrimary">@color/dark_green</item>
+    </style>
+    <style name="DialToCall" parent="Theme.AppCompat.DayNight.DarkActionBar">
+        <item name="colorPrimary">@color/dark_yellow</item>
+    </style>
+    <style name="RecognizeObject" parent="Theme.AppCompat.DayNight.DarkActionBar">
+        <item name="colorPrimary">@color/dark_red</item>
+    </style>
+    <style name="RecognizeText" parent="Theme.AppCompat.DayNight.DarkActionBar">
+        <item name="colorPrimary">@color/dark_purple</item>
+    </style>
+    <style name="VoiceAssistant" parent="Theme.AppCompat.DayNight.DarkActionBar">
+        <item name="colorPrimary">@color/dark_blue</item>
+    </style>
+</resources>

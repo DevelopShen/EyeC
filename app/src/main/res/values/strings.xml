@@ -1,0 +1,50 @@
+<resources>
+    <string name="app_name">EyeC</string>
+    <string name="registerContact">Register Contact</string>
+    <string name="dialToCall">Dial To Call</string>
+    <string name="voiceAssistant">Voice Assistant</string>
+    <string name="recognizeText">Recognize Text</string>
+    <string name="recognizeObject">Recognize Object</string>
+    <string name="home">Home</string>
+
+    <string name="name">Name</string>
+    <string name="phoneNumber">Phone Number</string>
+    <string name="pleaseEnterPhoneNumber">Please enter your phone number</string>
+    <string name="save">SAVE</string>
+    <string name="delete">DEL</string>
+
+    <string name="welcome">Welcome!</string>
+
+    <string name="btnNavigation">NAVIGATION</string>
+    <string name="btnRecognizeObject">RECOGNIZE OBJECT</string>
+    <string name="btnRecognizeText">RECOGNIZE TEXT</string>
+    <string name="btnDialToCall">DIAL TO CALL</string>
+    <string name="btnRegisterContact">REGISTER CONTACT</string>
+    <string name="btnVoiceAssistant">VOICE ASSISTANT</string>
+    <string name="btnExitApplication">EXIT APPLICATION</string>
+
+    <string name="voiceOutput">Your voice output will be displayed here.</string>
+    <string name="speech_prompt">Say something</string>
+    <string name="speech_not_supported">Speech not supported</string>
+
+    <string name="zero">0</string>
+    <string name="one">1</string>
+    <string name="two">2</string>
+    <string name="three">3</string>
+    <string name="four">4</string>
+    <string name="five">5</string>
+    <string name="six">6</string>
+    <string name="seven">7</string>
+    <string name="eight">8</string>
+    <string name="nine">9</string>
+    <string name="star">*</string>
+    <string name="hash">#</string>
+
+    <string name="captureText">Capture Text</string>
+
+    <string name="tfe_od_camera_error" translation_description="Error regarding camera support[CHAR_LIMIT=40]">This device doesn\'t support Camera2 API.</string>
+
+    <string name="local_service_started">Local service started.</string>
+    <string name="local_service_connected">Local service connected.</string>
+    <string name="local_service_disconnected">Local service disconnected.</string>
+</resources>

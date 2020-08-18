@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.mobileappforblind">
+
+    <!--Foreground services permission will be required-->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <!--Vibration permission will be required-->
+    <uses-permission android:name="android.permission.VIBRATE"/>
+
+    <!--Audio recording permission will be required-->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <!--Contact accessing permission will be required-->
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
+    <!--Phone calling permission will be required-->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
+    <!--Camera and storage permission will be required-->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <receiver android:name=".HardwareButtonReceiver.HardwareButtonReceiver">
+            <intent-filter>
+                <action android:name="android.media.VOLUME_CHANGED_ACTION" />
+            </intent-filter>
+        </receiver>
+        <activity
+            android:name=".ObjectDetection.DetectorActivity"
+            android:label="@string/recognizeObject"
+            android:theme="@style/RecognizeObject" />
+        <activity
+            android:name=".RecognizeText"
+            android:label="@string/recognizeText"
+            android:theme="@style/RecognizeText" />
+        <activity
+            android:name=".DialToCall"
+            android:label="@string/dialToCall"
+            android:theme="@style/DialToCall" />
+        <activity
+            android:name=".VoiceAssistant"
+            android:label="@string/voiceAssistant"
+            android:theme="@style/VoiceAssistant" />
+        <activity
+            android:name=".RegisterContact"
+            android:label="@string/registerContact"
+            android:theme="@style/RegisterContact" />
+        <activity
+            android:name=".Home"
+            android:label="@string/home" />
+        <activity
+            android:name=".StartupActivity"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!--add in application tag-->
+        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/AppTheme"/> <!-- optional (needed if default theme has no action bar) -->
+
+        <service android:enabled="true" android:name="com.example.mobileappforblind.HardwareButtonReceiver.BackgroundService" />
+
+    </application>
+</manifest>

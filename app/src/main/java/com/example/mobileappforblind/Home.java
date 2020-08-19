@@ -33,10 +33,6 @@ public class Home extends AppCompatActivity {
 
         final Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
-        //Notify homepage
-        MediaPlayer mpHomePage = MediaPlayer.create(Home.this, R.raw.homepage);
-        mpHomePage.start();
-
         //Media players for notifying
         mpDing = MediaPlayer.create(Home.this, R.raw.ding);
         mpRegisterContact = MediaPlayer.create(Home.this, R.raw.register_contact);
@@ -54,7 +50,7 @@ public class Home extends AppCompatActivity {
                     mpDing.start();
                     Intent intent = new Intent(Home.this, RegisterContact.class);
                     startActivity(intent);
-                    mpRegisterContact.start();
+//                    mpRegisterContact.start();
                     return super.onDoubleTap(e);
                 }
                 @Override
@@ -204,5 +200,13 @@ public class Home extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        MediaPlayer mpHomePage = MediaPlayer.create(Home.this, R.raw.homepage);
+        mpHomePage.start();
     }
 }

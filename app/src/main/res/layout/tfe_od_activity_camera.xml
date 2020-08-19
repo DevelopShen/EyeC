@@ -33,13 +33,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:context="org.tensorflow.demo.CameraActivity" >
-
-            <TextView
-                android:id="@+id/tvRecognitionResult"
-                android:layout_width="match_parent"
-                android:layout_height="74dp"
-                android:layout_marginTop="480dp"
-                android:text="TextView" />
         </FrameLayout>
 
     </RelativeLayout>

@@ -1,7 +1,5 @@
 package com.example.mobileappforblind;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Build;
@@ -11,10 +9,9 @@ import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
-import com.example.mobileappforblind.HardwareButtonReceiver.BackgroundService;
-import com.example.mobileappforblind.HardwareButtonReceiver.HardwareButtonReceiver;
+import com.example.mobileappforblind.ScreenOnOffActivity.BackgroundService;
+import com.example.mobileappforblind.ScreenOnOffActivity.ScreenOnOffReceiver;
 
 public class StartupActivity extends AppCompatActivity {
     private static int SPLASH_TIME_OUT = 2500;
@@ -28,6 +25,19 @@ public class StartupActivity extends AppCompatActivity {
 
         Intent backgroundService = new Intent(getApplicationContext(), BackgroundService.class);
         startForegroundService(backgroundService);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        welcome.release();
+        Log.d(ScreenOnOffReceiver.SCREEN_TOGGLE_TAG, "Activity onDestroy");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -39,13 +49,5 @@ public class StartupActivity extends AppCompatActivity {
         }, SPLASH_TIME_OUT);
         welcome = MediaPlayer.create(StartupActivity.this, R.raw.welcome);
         welcome.start();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        welcome.release();
-        Log.d(HardwareButtonReceiver.SCREEN_TOGGLE_TAG, "Activity onDestroy");
     }
 }

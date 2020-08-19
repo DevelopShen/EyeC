@@ -1,4 +1,4 @@
-package com.example.mobileappforblind.HardwareButtonReceiver;
+package com.example.mobileappforblind.ScreenOnOffActivity;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -15,7 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
 public class BackgroundService extends Service {
-    private HardwareButtonReceiver hardwareButtonReceiver = null;
+    private ScreenOnOffReceiver screenOnOffReceiver = null;
 
     @Nullable
     @Override
@@ -36,17 +36,17 @@ public class BackgroundService extends Service {
         IntentFilter intentFilter = new IntentFilter();
 
         // Add network connectivity change action.
-        intentFilter.addAction("android.intent.action.SCREEN_ON");
+        intentFilter.addAction("android.intent.action.USER_PRESENT");
         intentFilter.addAction("android.intent.action.SCREEN_OFF");
 
         // Set broadcast receiver priority.
-        intentFilter.setPriority(100);
+        intentFilter.setPriority(900);
 
         // Create a network change broadcast receiver.
-        hardwareButtonReceiver = new HardwareButtonReceiver();
+        screenOnOffReceiver = new ScreenOnOffReceiver();
 
         // Register the broadcast receiver with the intent filter object.
-        registerReceiver(hardwareButtonReceiver, intentFilter);
+        registerReceiver(screenOnOffReceiver, intentFilter);
 
         if (Build.VERSION.SDK_INT >= 26) {
             String CHANNEL_ID = "EyeC_running";
@@ -63,7 +63,7 @@ public class BackgroundService extends Service {
             startForeground(1, notification);
         }
 
-        Log.d(HardwareButtonReceiver.SCREEN_TOGGLE_TAG, "Service onCreate: screenOnOffReceiver is registered.");
+        Log.d(ScreenOnOffReceiver.SCREEN_TOGGLE_TAG, "Service onCreate: screenOnOffReceiver is registered.");
     }
 
     @Override
@@ -71,10 +71,10 @@ public class BackgroundService extends Service {
         super.onDestroy();
 
         // Unregister screenOnOffReceiver when destroy.
-        if(hardwareButtonReceiver!=null)
+        if(screenOnOffReceiver !=null)
         {
-            unregisterReceiver(hardwareButtonReceiver);
-            Log.d(HardwareButtonReceiver.SCREEN_TOGGLE_TAG, "Service onDestroy: screenOnOffReceiver is unregistered.");
+            unregisterReceiver(screenOnOffReceiver);
+            Log.d(ScreenOnOffReceiver.SCREEN_TOGGLE_TAG, "Service onDestroy: screenOnOffReceiver is unregistered.");
         }
     }
 

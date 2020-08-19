@@ -35,7 +35,7 @@ public class RegisterContact extends AppCompatActivity {
     private MediaPlayer mpDing;
     private MediaPlayer mpSave;
     private MediaPlayer mpBack;
-    private MediaPlayer mpHomepage;
+    private MediaPlayer mpRegisterContact;
 
 
     private static final int REQUEST_READ_CONTACT = 1;
@@ -52,7 +52,6 @@ public class RegisterContact extends AppCompatActivity {
         mpDing = MediaPlayer.create(RegisterContact.this, R.raw.ding);
         mpSave = MediaPlayer.create(RegisterContact.this, R.raw.save);
         mpBack = MediaPlayer.create(RegisterContact.this, R.raw.back);
-        mpHomepage = MediaPlayer.create(RegisterContact.this, R.raw.homepage);
         mpSavedContact = MediaPlayer.create(RegisterContact.this, R.raw.contact_is_saved);
         mpErrorMessage = MediaPlayer.create(RegisterContact.this, R.raw.name_and_hp_no_nn);
 
@@ -135,7 +134,6 @@ public class RegisterContact extends AppCompatActivity {
                 public boolean onDoubleTap(MotionEvent e) {
                     mpDing.start();
                     finish();
-                    mpHomepage.start();
                     return super.onDoubleTap(e);
                 }
                 @Override
@@ -175,5 +173,13 @@ public class RegisterContact extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        mpRegisterContact = MediaPlayer.create(RegisterContact.this, R.raw.register_contact);
+        mpRegisterContact.start();
     }
 }

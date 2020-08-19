@@ -39,7 +39,6 @@ public class DialToCall extends AppCompatActivity {
     private MediaPlayer mpHash;
     private MediaPlayer mpCall;
     private MediaPlayer mpDelete;
-    private MediaPlayer mpHomepage;
     private MediaPlayer mpBack;
 
     @Override
@@ -70,7 +69,6 @@ public class DialToCall extends AppCompatActivity {
         mpHash = MediaPlayer.create(DialToCall.this, R.raw.hash);
         mpCall = MediaPlayer.create(DialToCall.this, R.raw.call);
         mpDelete = MediaPlayer.create(DialToCall.this, R.raw.delete);
-        mpHomepage = MediaPlayer.create(DialToCall.this, R.raw.homepage);
         mpBack = MediaPlayer.create(DialToCall.this, R.raw.back);
 
 
@@ -192,7 +190,6 @@ public class DialToCall extends AppCompatActivity {
             case R.id.btnBack:
                 mpDing.start();
                 finish();
-                mpHomepage.start();
                 break;
         }
     }

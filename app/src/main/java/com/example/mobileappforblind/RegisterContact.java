@@ -127,8 +127,8 @@ public class RegisterContact extends AppCompatActivity {
             }
         });
 
-        ImageButton back = findViewById(R.id.btnBack);
-        back.setOnTouchListener(new View.OnTouchListener() {
+        ImageButton backButton = findViewById(R.id.btnBack);
+        backButton.setOnTouchListener(new View.OnTouchListener() {
             private GestureDetector gestureDetector = new GestureDetector(RegisterContact.this, new GestureDetector.SimpleOnGestureListener() {
                 @Override
                 public boolean onDoubleTap(MotionEvent e) {

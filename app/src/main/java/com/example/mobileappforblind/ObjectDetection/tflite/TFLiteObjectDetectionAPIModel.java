@@ -20,6 +20,7 @@ import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.RectF;
 import android.os.Trace;
+import android.util.Log;
 
 import com.example.mobileappforblind.ObjectDetection.env.Logger;
 
@@ -216,6 +217,7 @@ public class TFLiteObjectDetectionAPIModel implements Classifier {
               labels.get((int) outputClasses[0][i] + labelOffset),
               outputScores[0][i],
               detection));
+      Log.d("Recognitions", String.valueOf(recognitions.get(0).getTitle()));
     }
     Trace.endSection(); // "recognizeImage"
     return recognitions;

@@ -7,7 +7,9 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -16,15 +18,20 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.provider.MediaStore;
 import android.speech.tts.TextToSpeech;
 import android.util.SparseArray;
+import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.vision.Frame;
@@ -36,10 +43,13 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 import java.util.Locale;
 
 public class RecognizeText extends AppCompatActivity {
-    private EditText etResult;
+    private TextView tvResult;
     private ImageView ivImagePreview;
 
     private MediaPlayer mpCaptureText;
+    private MediaPlayer mpDing;
+    private MediaPlayer mpBack;
+    private MediaPlayer mpSpeakText;
 
     private static final int CAMERA_REQUEST_CODE = 200;
     private static final int STORAGE_REQUEST_CODE = 400;
@@ -51,30 +61,100 @@ public class RecognizeText extends AppCompatActivity {
 
     private Uri image_uri;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recognize_text);
 
-        etResult = findViewById(R.id.etResult);
-        etResult.setEnabled(false);
+        tvResult = findViewById(R.id.tvResult);
+        tvResult.setEnabled(false);
 
         ivImagePreview = findViewById(R.id.ivImagePreview);
-        Button btnInstantCaptureImage = findViewById(R.id.btnInstantCaptureImage);
+        ImageButton btnCaptureImage = findViewById(R.id.btnCaptureImage);
+        ImageButton btnBack = findViewById(R.id.btnBack);
+        Button btnSpeakText = findViewById(R.id.btnSpeakText);
 
+        mpDing = MediaPlayer.create(RecognizeText.this, R.raw.ding);
+        mpBack = MediaPlayer.create(RecognizeText.this, R.raw.back);
         mpCaptureText = MediaPlayer.create(RecognizeText.this, R.raw.capture_text);
+        mpSpeakText = MediaPlayer.create(RecognizeText.this, R.raw.speak_text);
 
-        btnInstantCaptureImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mpCaptureText.start();
-                if (!checkCameraPermission()) {
-                    //camera permission not allowed, so request it
-                    requestCameraPermission();
-                } else {
-                    //permission allowed, take picture
-                    pickCamera();
+        final Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
+        btnBack.setOnTouchListener(new View.OnTouchListener() {
+            private GestureDetector gestureDetector = new GestureDetector(RecognizeText.this, new GestureDetector.SimpleOnGestureListener() {
+                @Override
+                public boolean onDoubleTap(MotionEvent e) {
+                    mpDing.start();
+                    finish();
+                    return super.onDoubleTap(e);
                 }
+                @Override
+                public boolean onSingleTapConfirmed(MotionEvent event) {
+                    vibratePhone(vibrator);
+                    mpBack.start();
+                    return false;
+                }
+            });
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                gestureDetector.onTouchEvent(event);
+                return true;
+            }
+        });
+
+        btnCaptureImage.setOnTouchListener(new View.OnTouchListener() {
+            private GestureDetector gestureDetector = new GestureDetector(RecognizeText.this, new GestureDetector.SimpleOnGestureListener() {
+                @Override
+                public boolean onDoubleTap(MotionEvent e) {
+                    mpDing.start();
+                    mpCaptureText.start();
+                    if (!checkCameraPermission()) {
+                        //camera permission not allowed, so request it
+                        requestCameraPermission();
+                    } else {
+                        //permission allowed, take picture
+                        pickCamera();
+                    }
+                    return super.onDoubleTap(e);
+                }
+                @Override
+                public boolean onSingleTapConfirmed(MotionEvent event) {
+                    vibratePhone(vibrator);
+                    mpCaptureText.start();
+                    return false;
+                }
+            });
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                gestureDetector.onTouchEvent(event);
+                return true;
+            }
+        });
+
+        btnSpeakText.setOnTouchListener(new View.OnTouchListener() {
+            private GestureDetector gestureDetector = new GestureDetector(RecognizeText.this, new GestureDetector.SimpleOnGestureListener() {
+                @Override
+                public boolean onDoubleTap(MotionEvent e) {
+                    mpDing.start();
+                    speak(tvResult.getText().toString());
+                    return super.onDoubleTap(e);
+                }
+                @Override
+                public boolean onSingleTapConfirmed(MotionEvent event) {
+                    vibratePhone(vibrator);
+                    mpSpeakText.start();
+                    return false;
+                }
+            });
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                gestureDetector.onTouchEvent(event);
+                return true;
             }
         });
 
@@ -211,7 +291,7 @@ public class RecognizeText extends AppCompatActivity {
                         SB.append(myItem.getValue());
                         SB.append("\n");
                     } //set text to edit text
-                    etResult.setText(SB.toString());
+                    tvResult.setText(SB.toString());
                     speak(SB.toString());
                 }
             } else if (requestCode == IMAGE_PICK_GALLERY_CODE) {
@@ -249,7 +329,7 @@ public class RecognizeText extends AppCompatActivity {
                         SB.append(myItem.getValue());
                         SB.append("\n");
                     } //set text to edit text
-                    etResult.setText(SB.toString());
+                    tvResult.setText(SB.toString());
                     speak(SB.toString());
                 }
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
@@ -284,6 +364,15 @@ public class RecognizeText extends AppCompatActivity {
         });
     }
 
+    public void vibratePhone(Vibrator v) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            v.vibrate(VibrationEffect.createOneShot(150, VibrationEffect.DEFAULT_AMPLITUDE));
+        } else {
+            v.vibrate(150);
+        }
+    }
+
+    @Override
     protected void onDestroy() {
         if (TTS != null) {
             TTS.stop();
@@ -295,11 +384,22 @@ public class RecognizeText extends AppCompatActivity {
         mpCaptureText.release();
     }
 
+    @Override
     protected void onPause() {
         if (TTS != null) {
             TTS.stop();
         }
 
         super.onPause();
+    }
+
+    private MediaPlayer mpRecognizeText;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        mpRecognizeText = MediaPlayer.create(RecognizeText.this, R.raw.recognize_text);
+        mpRecognizeText.start();
     }
 }

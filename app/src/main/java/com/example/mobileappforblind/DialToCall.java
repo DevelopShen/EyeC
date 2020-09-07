@@ -40,6 +40,7 @@ public class DialToCall extends AppCompatActivity {
     private MediaPlayer mpCall;
     private MediaPlayer mpDelete;
     private MediaPlayer mpBack;
+    private MediaPlayer mpDialToCall;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -276,5 +277,13 @@ public class DialToCall extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        mpDialToCall = MediaPlayer.create(DialToCall.this, R.raw.dial_to_call);
+        mpDialToCall.start();
     }
 }

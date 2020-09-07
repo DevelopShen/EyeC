@@ -14,7 +14,10 @@
     <color name="dark_red">#260303</color>
     <color name="dark_purple">#160326</color>
     <color name="strong_green">#0C790F</color>
-    <color name="green">#92FF00</color>
+    <color name="neon_green">#39FF14</color>
+    <color name="blue">#001FFF</color>
+    <color name="green">#94FB00</color>
+    <color name="red">#FF0000</color>
     <color name="aqua">#9EFFFB</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>

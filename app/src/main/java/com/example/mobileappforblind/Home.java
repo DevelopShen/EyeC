@@ -50,7 +50,6 @@ public class Home extends AppCompatActivity {
                     mpDing.start();
                     Intent intent = new Intent(Home.this, RegisterContact.class);
                     startActivity(intent);
-//                    mpRegisterContact.start();
                     return super.onDoubleTap(e);
                 }
                 @Override
@@ -77,7 +76,6 @@ public class Home extends AppCompatActivity {
                     mpDing.start();
                     Intent intent = new Intent(Home.this, DialToCall.class);
                     startActivity(intent);
-                    mpDialToCall.start();
                     return super.onDoubleTap(e);
                 }
                 @Override
@@ -104,7 +102,6 @@ public class Home extends AppCompatActivity {
                     mpDing.start();
                     Intent intent = new Intent(Home.this, DetectorActivity.class);
                     startActivity(intent);
-                    mpRecognizeObject.start();
                     return super.onDoubleTap(e);
                 }
                 @Override
@@ -131,7 +128,6 @@ public class Home extends AppCompatActivity {
                     mpDing.start();
                     Intent intent = new Intent(Home.this, RecognizeText.class);
                     startActivity(intent);
-                    mpRecognizeText.start();
                     return super.onDoubleTap(e);
                 }
                 @Override
@@ -158,7 +154,6 @@ public class Home extends AppCompatActivity {
                     mpDing.start();
                     Intent intent = new Intent(Home.this, VoiceAssistant.class);
                     startActivity(intent);
-                    mpVoiceAssistant.start();
                     return super.onDoubleTap(e);
                 }
                 @Override

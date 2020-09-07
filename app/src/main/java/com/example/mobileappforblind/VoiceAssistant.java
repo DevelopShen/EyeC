@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.media.MediaPlayer;
 import android.os.BatteryManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -198,5 +199,15 @@ public class VoiceAssistant extends AppCompatActivity {
         }
 
         super.onPause();
+    }
+
+    private MediaPlayer mpVoiceAssistant;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        mpVoiceAssistant = MediaPlayer.create(VoiceAssistant.this, R.raw.voice_assistant);
+        mpVoiceAssistant.start();
     }
 }

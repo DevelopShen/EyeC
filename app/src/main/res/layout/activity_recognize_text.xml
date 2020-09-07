@@ -32,20 +32,20 @@
                     android:padding="5dp">
 
                     <TextView
-                        android:id="@+id/tvResult"
+                        android:id="@+id/tvResultTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Result"
+                        android:text="@string/result"
                         android:textColor="@color/dark_purple"
                         android:textSize="25sp" />
                     <!--The scanned text from image will be displayed here-->
-                    <EditText
-                        android:id="@+id/etResult"
+                    <TextView
+                        android:id="@+id/tvResult"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:autoLink="all"
                         android:background="@color/white"
-                        android:hint="Your output will be displayed here."
+                        android:hint="@string/textOutputHint"
                         android:padding="5dp"
                         android:textColor="#000" />
                 </LinearLayout>
@@ -70,7 +70,7 @@
                         android:id="@+id/tvImagePreview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Image Preview"
+                        android:text="@string/imagePreview"
                         android:textColor="@color/dark_purple"
                         android:textSize="25sp" />
                     <!--The image taken will be displayed here-->
@@ -86,20 +86,41 @@
 
     </ScrollView>
 
-    <Button
-        android:id="@+id/btnInstantCaptureImage"
-        android:layout_width="228dp"
-        android:layout_height="91dp"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="91dp"
-        android:layout_marginEnd="91dp"
-        android:layout_marginBottom="115dp"
-        android:background="#141010"
-        android:shadowColor="@color/cardview_dark_background"
-        android:text="@string/captureText"
-        android:textColor="#FFFFFF"
-        android:textSize="30sp" />
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="1dp"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/blue_bd_neon_green_bg"
+            app:srcCompat="@drawable/ic_back_from_object_detection_foreground" />
+
+        <ImageButton
+            android:id="@+id/btnCaptureImage"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/red_bd_dark_blue_bg"
+            app:srcCompat="@drawable/ic_capture_text_foreground" />
+
+        <Button
+            android:id="@+id/btnSpeakText"
+            android:layout_width="105dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/blue_bd_neon_green_bg"
+            android:text="@string/speakText"
+            android:textSize="30sp" />
+    </LinearLayout>
 
 </RelativeLayout>

@@ -17,6 +17,7 @@
 package com.example.mobileappforblind.ObjectDetection;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -29,21 +30,24 @@ import android.media.Image;
 import android.media.Image.Plane;
 import android.media.ImageReader;
 import android.media.ImageReader.OnImageAvailableListener;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Trace;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.util.Size;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
-
 import com.example.mobileappforblind.ObjectDetection.env.ImageUtils;
 import com.example.mobileappforblind.ObjectDetection.env.Logger;
 import com.example.mobileappforblind.R;
@@ -73,6 +77,11 @@ public abstract class CameraActivity extends AppCompatActivity
   private Runnable postInferenceCallback;
   private Runnable imageConverter;
 
+  private MediaPlayer mpDing;
+  private MediaPlayer mpBack;
+  private MediaPlayer mpRecognizeObject;
+
+  @SuppressLint("ClickableViewAccessibility")
   @Override
   protected void onCreate(final Bundle savedInstanceState) {
     LOGGER.d("onCreate " + this);
@@ -87,6 +96,41 @@ public abstract class CameraActivity extends AppCompatActivity
       requestPermission();
     }
 
+    final Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+    mpDing = MediaPlayer.create(CameraActivity.this, R.raw.ding);
+    mpBack = MediaPlayer.create(CameraActivity.this, R.raw.back);
+
+    ImageButton backButton = findViewById(R.id.btnBack);
+    backButton.setOnTouchListener(new View.OnTouchListener() {
+      private GestureDetector gestureDetector = new GestureDetector(CameraActivity.this, new GestureDetector.SimpleOnGestureListener() {
+        @Override
+        public boolean onDoubleTap(MotionEvent e) {
+          mpDing.start();
+          finish();
+          return super.onDoubleTap(e);
+        }
+        @Override
+        public boolean onSingleTapConfirmed(MotionEvent event) {
+          vibratePhone(vibrator);
+          mpBack.start();
+          return false;
+        }
+      });
+
+      @Override
+      public boolean onTouch(View v, MotionEvent event) {
+        gestureDetector.onTouchEvent(event);
+        return true;
+      }
+    });
+  }
+
+  public void vibratePhone(Vibrator v) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+      v.vibrate(VibrationEffect.createOneShot(150, VibrationEffect.DEFAULT_AMPLITUDE));
+    } else {
+      v.vibrate(150);
+    }
   }
 
   protected int[] getRgbBytes() {
@@ -229,6 +273,9 @@ public abstract class CameraActivity extends AppCompatActivity
     handlerThread = new HandlerThread("inference");
     handlerThread.start();
     handler = new Handler(handlerThread.getLooper());
+
+    mpRecognizeObject = MediaPlayer.create(CameraActivity.this, R.raw.recognize_object);
+    mpRecognizeObject.start();
   }
 
   @Override

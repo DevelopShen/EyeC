@@ -257,7 +257,6 @@ public class DialToCall extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
 
-        mpDing.release();
         mpAsterisk.release();
         mpCall.release();
         mpDelete.release();

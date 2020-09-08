@@ -382,7 +382,6 @@ public class RecognizeText extends AppCompatActivity {
         super.onDestroy();
 
         mpCaptureText.release();
-        mpDing.release();
         mpSpeakText.release();
     }
 

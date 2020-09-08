@@ -59,7 +59,7 @@
             android:textSize="30sp" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/btnExitApp"
             android:layout_width="match_parent"
             android:layout_height="110dp"
             android:background="@color/black"

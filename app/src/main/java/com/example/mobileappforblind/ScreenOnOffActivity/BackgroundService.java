@@ -40,7 +40,7 @@ public class BackgroundService extends Service {
         intentFilter.addAction("android.intent.action.SCREEN_OFF");
 
         // Set broadcast receiver priority.
-        intentFilter.setPriority(900);
+        intentFilter.setPriority(999);
 
         // Create a network change broadcast receiver.
         screenOnOffReceiver = new ScreenOnOffReceiver();

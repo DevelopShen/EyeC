@@ -39,10 +39,10 @@
                 android:id="@+id/btnBack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/transparent_bd_white_bg"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:srcCompat="@drawable/ic_back_from_object_detection_foreground"
-                android:background="@color/white" />
+                app:srcCompat="@drawable/ic_back_from_object_detection_foreground" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </RelativeLayout>

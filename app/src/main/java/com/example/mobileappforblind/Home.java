@@ -24,6 +24,7 @@ public class Home extends AppCompatActivity {
     private MediaPlayer mpRecognizeObject;
     private MediaPlayer mpRecognizeText;
     private MediaPlayer mpVoiceAssistant;
+    private MediaPlayer mpExitApp;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -40,10 +41,11 @@ public class Home extends AppCompatActivity {
         mpRecognizeObject = MediaPlayer.create(Home.this, R.raw.recognize_object);
         mpRecognizeText = MediaPlayer.create(Home.this, R.raw.recognize_text);
         mpVoiceAssistant = MediaPlayer.create(Home.this, R.raw.voice_assistant);
+        mpExitApp = MediaPlayer.create(Home.this, R.raw.exit_application);
 
         //Access Register Contact
-        Button registerContact = findViewById(R.id.btnRegisterContact);
-        registerContact.setOnTouchListener(new View.OnTouchListener() {
+        Button btnRegisterContact = findViewById(R.id.btnRegisterContact);
+        btnRegisterContact.setOnTouchListener(new View.OnTouchListener() {
             private GestureDetector gestureDetector = new GestureDetector(Home.this, new GestureDetector.SimpleOnGestureListener() {
                 @Override
                 public boolean onDoubleTap(MotionEvent e) {
@@ -68,8 +70,8 @@ public class Home extends AppCompatActivity {
         });
 
         //Access Dial to Call
-        Button dialToCall = findViewById(R.id.btnDialToCall);
-        dialToCall.setOnTouchListener(new View.OnTouchListener() {
+        Button btnDialToCall = findViewById(R.id.btnDialToCall);
+        btnDialToCall.setOnTouchListener(new View.OnTouchListener() {
             private GestureDetector gestureDetector = new GestureDetector(Home.this, new GestureDetector.SimpleOnGestureListener() {
                 @Override
                 public boolean onDoubleTap(MotionEvent e) {
@@ -94,8 +96,8 @@ public class Home extends AppCompatActivity {
         });
 
         //Access Recognize Object
-        Button recognizeObject = findViewById(R.id.btnRecogizeObject);
-        recognizeObject.setOnTouchListener(new View.OnTouchListener() {
+        Button btnRecognizeObject = findViewById(R.id.btnRecogizeObject);
+        btnRecognizeObject.setOnTouchListener(new View.OnTouchListener() {
             private GestureDetector gestureDetector = new GestureDetector(Home.this, new GestureDetector.SimpleOnGestureListener() {
                 @Override
                 public boolean onDoubleTap(MotionEvent e) {
@@ -120,8 +122,8 @@ public class Home extends AppCompatActivity {
         });
 
         //Access Recognize Text
-        Button recognizeText = findViewById(R.id.btnRecogizeText);
-        recognizeText.setOnTouchListener(new View.OnTouchListener() {
+        Button btnRecognizeText = findViewById(R.id.btnRecogizeText);
+        btnRecognizeText.setOnTouchListener(new View.OnTouchListener() {
             private GestureDetector gestureDetector = new GestureDetector(Home.this, new GestureDetector.SimpleOnGestureListener() {
                 @Override
                 public boolean onDoubleTap(MotionEvent e) {
@@ -146,8 +148,8 @@ public class Home extends AppCompatActivity {
         });
 
         //Access Voice Assistant
-        Button voiceAssistant = findViewById(R.id.btnVoiceAssistant);
-        voiceAssistant.setOnTouchListener(new View.OnTouchListener() {
+        Button btnVoiceAssistant = findViewById(R.id.btnVoiceAssistant);
+        btnVoiceAssistant.setOnTouchListener(new View.OnTouchListener() {
             private GestureDetector gestureDetector = new GestureDetector(Home.this, new GestureDetector.SimpleOnGestureListener() {
                 @Override
                 public boolean onDoubleTap(MotionEvent e) {
@@ -160,6 +162,33 @@ public class Home extends AppCompatActivity {
                 public boolean onSingleTapConfirmed(MotionEvent event) {
                     vibratePhone(vibrator);
                     mpVoiceAssistant.start();
+                    return false;
+                }
+            });
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                gestureDetector.onTouchEvent(event);
+                return true;
+            }
+        });
+
+        Button btnExitApp = findViewById(R.id.btnExitApp);
+        btnExitApp.setOnTouchListener(new View.OnTouchListener() {
+            private GestureDetector gestureDetector = new GestureDetector(Home.this, new GestureDetector.SimpleOnGestureListener() {
+                @Override
+                public boolean onDoubleTap(MotionEvent e) {
+                    mpDing.start();
+                    Intent intent = new Intent(Intent.ACTION_MAIN);
+                    intent.addCategory(Intent.CATEGORY_HOME);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    return super.onDoubleTap(e);
+                }
+                @Override
+                public boolean onSingleTapConfirmed(MotionEvent event) {
+                    vibratePhone(vibrator);
+                    mpExitApp.start();
                     return false;
                 }
             });

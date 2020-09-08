@@ -20,7 +20,6 @@ import android.app.Fragment;
 import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -36,7 +35,6 @@ import com.example.mobileappforblind.ObjectDetection.customview.AutoFitTextureVi
 import com.example.mobileappforblind.ObjectDetection.env.ImageUtils;
 import com.example.mobileappforblind.ObjectDetection.env.Logger;
 import com.example.mobileappforblind.R;
-import com.example.mobileappforblind.RegisterContact;
 
 import java.io.IOException;
 import java.util.List;

@@ -50,6 +50,7 @@ public class RecognizeText extends AppCompatActivity {
     private MediaPlayer mpDing;
     private MediaPlayer mpBack;
     private MediaPlayer mpSpeakText;
+    private MediaPlayer mpGallery;
 
     private static final int CAMERA_REQUEST_CODE = 200;
     private static final int STORAGE_REQUEST_CODE = 400;
@@ -66,6 +67,7 @@ public class RecognizeText extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recognize_text);
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
 
         tvResult = findViewById(R.id.tvResult);
         tvResult.setEnabled(false);
@@ -79,6 +81,7 @@ public class RecognizeText extends AppCompatActivity {
         mpBack = MediaPlayer.create(RecognizeText.this, R.raw.back);
         mpCaptureText = MediaPlayer.create(RecognizeText.this, R.raw.capture_text);
         mpSpeakText = MediaPlayer.create(RecognizeText.this, R.raw.speak_text);
+        mpGallery = MediaPlayer.create(RecognizeText.this, R.raw.gallery);
 
         final Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
@@ -177,18 +180,17 @@ public class RecognizeText extends AppCompatActivity {
     //handle ActionBar item clicks
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
+        final int id = item.getItemId();
+
         if (id == R.id.addImage) {
             if (!checkStoragePermission()) {
                 //storage permission not allowed, so request it
+                mpGallery = MediaPlayer.create(RecognizeText.this, R.raw.gallery);
                 requestStoragePermission();
             } else {
                 //permission allowed, access storage
                 pickGallery();
             }
-        }
-        if (id == R.id.settings) {
-            Toast.makeText(RecognizeText.this, "Settings", Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -373,6 +375,20 @@ public class RecognizeText extends AppCompatActivity {
     }
 
     @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus) {
+            getWindow().getDecorView().setSystemUiVisibility(
+                            View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            |View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+            );
+        }
+    }
+
+    @Override
     protected void onDestroy() {
         if (TTS != null) {
             TTS.stop();
@@ -383,6 +399,7 @@ public class RecognizeText extends AppCompatActivity {
 
         mpCaptureText.release();
         mpSpeakText.release();
+        mpGallery.release();
     }
 
     @Override

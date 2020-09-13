@@ -19,6 +19,7 @@ import com.example.mobileappforblind.ObjectDetection.DetectorActivity;
 
 public class Home extends AppCompatActivity {
     private MediaPlayer mpDing;
+    private MediaPlayer mpGoodbye;
     private MediaPlayer mpRegisterContact;
     private MediaPlayer mpDialToCall;
     private MediaPlayer mpRecognizeObject;
@@ -31,11 +32,13 @@ public class Home extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
 
         final Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
         //Media players for notifying
         mpDing = MediaPlayer.create(Home.this, R.raw.ding);
+        mpGoodbye = MediaPlayer.create(Home.this, R.raw.goodbye);
         mpRegisterContact = MediaPlayer.create(Home.this, R.raw.register_contact);
         mpDialToCall = MediaPlayer.create(Home.this, R.raw.dial_to_call);
         mpRecognizeObject = MediaPlayer.create(Home.this, R.raw.recognize_object);
@@ -178,7 +181,7 @@ public class Home extends AppCompatActivity {
             private GestureDetector gestureDetector = new GestureDetector(Home.this, new GestureDetector.SimpleOnGestureListener() {
                 @Override
                 public boolean onDoubleTap(MotionEvent e) {
-                    mpDing.start();
+                    mpGoodbye.start();
                     Intent intent = new Intent(Intent.ACTION_MAIN);
                     intent.addCategory(Intent.CATEGORY_HOME);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -214,6 +217,7 @@ public class Home extends AppCompatActivity {
         super.onDestroy();
 
         mpDing.release();
+        mpGoodbye.release();
         mpRegisterContact.release();
         mpDialToCall.release();
         mpRecognizeObject.release();
@@ -232,5 +236,20 @@ public class Home extends AppCompatActivity {
 
         MediaPlayer mpHomePage = MediaPlayer.create(Home.this, R.raw.homepage);
         mpHomePage.start();
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus) {
+            getWindow().getDecorView().setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+            );
+        }
     }
 }

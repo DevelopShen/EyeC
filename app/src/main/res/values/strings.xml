@@ -9,7 +9,9 @@
 
     <string name="name">Name</string>
     <string name="phoneNumber">Phone Number</string>
-    <string name="pleaseEnterPhoneNumber">Please enter your phone number</string>
+    <string name="speakName">Speak Name</string>
+    <string name="enterPhoneNumber">Enter Phone Number</string>
+    <string name="speakPhoneNumber">Speak Phone Number</string>
     <string name="save">SAVE</string>
     <string name="delete">DEL</string>
 

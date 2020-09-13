@@ -7,16 +7,17 @@
     android:background="@color/pale_light_blue"
     tools:context=".DialToCall">
 
-    <EditText
-        android:id="@+id/etPhoneNumber"
+    <TextView
+        android:id="@+id/tvPhoneNumber"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="92dp"
-        android:hint="@string/pleaseEnterPhoneNumber"
-        android:inputType="phone"
-        android:textSize="23sp"
+        android:hint="@string/enterPhoneNumber"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:textSize="28sp"
+        app:layout_constraintBottom_toTopOf="@+id/btnSpeakPhoneNumber"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -184,35 +185,47 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
 
         <ImageButton
             android:id="@+id/btnBack"
-            android:layout_width="wrap_content"
-            android:layout_height="102sp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/dark_blue"
             app:srcCompat="@drawable/ic_back_foreground" />
 
         <ImageButton
             android:id="@+id/btnCall"
-            android:layout_width="wrap_content"
-            android:layout_height="102sp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/transparent"
             app:srcCompat="@drawable/ic_call_foreground" />
 
         <Button
             android:id="@+id/btnDelete"
-            android:layout_width="wrap_content"
-            android:layout_height="102sp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/dark_green"
             android:text="@string/delete"
             android:textColor="@color/white"
             android:textSize="45sp" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/btnSpeakPhoneNumber"
+        android:layout_width="match_parent"
+        android:layout_height="107dp"
+        android:background="@drawable/blue_bd_neon_green_bg"
+        android:text="@string/speakPhoneNumber"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

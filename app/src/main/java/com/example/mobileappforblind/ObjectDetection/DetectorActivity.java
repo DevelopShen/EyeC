@@ -26,7 +26,9 @@ import android.graphics.Paint.Style;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.media.ImageReader.OnImageAvailableListener;
+import android.os.Build;
 import android.os.SystemClock;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.util.Size;
 import android.util.TypedValue;
@@ -46,6 +48,7 @@ import com.example.mobileappforblind.R;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * An activity that uses a TensorFlowMultiBoxDetector and ObjectTracker to detect and then track
@@ -150,6 +153,8 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
         });
 
     tracker.setFrameConfiguration(previewWidth, previewHeight, sensorOrientation);
+
+    initializeTextToSpeech();
   }
 
   @Override
@@ -184,7 +189,7 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
             LOGGER.i("Running detection on image " + currTimestamp);
             final long startTime = SystemClock.uptimeMillis();
             final List<Classifier.Recognition> results = detector.recognizeImage(croppedBitmap);
-            Log.d("Results", String.valueOf(results.get(0).getTitle()));
+            speak(String.valueOf(results.get(0).getTitle()));
 
             lastProcessingTimeMs = SystemClock.uptimeMillis() - startTime;
 
@@ -250,5 +255,50 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
   // checkpoints.
   private enum DetectorMode {
     TF_OD_API;
+  }
+
+  private TextToSpeech TTS;
+
+  private void speak(String message) {
+    if(Build.VERSION.SDK_INT >= 21) {
+      TTS.speak(message, TextToSpeech.QUEUE_FLUSH, null, null);
+      TTS.playSilentUtterance(4000, TextToSpeech.QUEUE_ADD, null);
+    } else {
+      TTS.speak(message, TextToSpeech.QUEUE_FLUSH, null);
+    }
+  }
+
+  @Override
+  public synchronized void onDestroy() {
+    if (TTS != null) {
+      TTS.stop();
+      TTS.shutdown();
+    }
+
+    super.onDestroy();
+  }
+
+  @Override
+  public synchronized void onPause() {
+    super.onPause();
+  }
+
+  @Override
+  public synchronized void onResume() {
+    super.onResume();
+  }
+
+  private void initializeTextToSpeech() {
+    TTS = new TextToSpeech(DetectorActivity.this, new TextToSpeech.OnInitListener() {
+      @Override
+      public void onInit(int status) {
+        if(TTS.getEngines().size() == 0) {
+          Toast.makeText(DetectorActivity.this, "There is no text to speech engine installed in this device.", Toast.LENGTH_LONG).show();
+          finish();
+        } else {
+          TTS.setLanguage(Locale.ENGLISH);
+        }
+      }
+    });
   }
 }

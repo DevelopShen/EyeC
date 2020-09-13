@@ -6,8 +6,4 @@
         android:title="Add Image"
         app:showAsAction="always"
         android:icon="@drawable/ic_action_image" />
-    <!--other menu items-->
-    <item
-        android:id="@+id/settings"
-        android:title="Setting" />
 </menu>

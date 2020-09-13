@@ -44,7 +44,7 @@
         android:background="@color/green"
         android:text="@string/save"
         android:textColor="@color/dark_green"
-        android:textSize="30sp"
+        android:textSize="50sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -54,11 +54,38 @@
 
     <ImageButton
         android:id="@+id/btnBack"
-        android:layout_width="95dp"
-        android:layout_height="95dp"
-        android:background="@color/dark_green"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:background="@drawable/dark_green_round_corner"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/ic_back_foreground" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="149dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/etName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.027">
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textSize="30sp"
+            android:text="@string/speakName" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textSize="30sp"
+            android:text="@string/speakPhoneNumber" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

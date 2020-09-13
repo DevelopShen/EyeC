@@ -38,9 +38,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <receiver android:name=".ScreenOnOffActivity.ScreenOnOffReceiver">
+        <receiver android:name=".UserPresentActivity.UserPresentReceiver">
             <intent-filter android:priority="999">
-                <action android:name="android.media.VOLUME_CHANGED_ACTION" />
+                <action android:name="android.intent.action.USER_PRESENT" />
             </intent-filter>
         </receiver>
         <activity
@@ -81,7 +81,7 @@
         <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/AppTheme"/> <!-- optional (needed if default theme has no action bar) -->
 
-        <service android:enabled="true" android:name="com.example.mobileappforblind.ScreenOnOffActivity.BackgroundService" />
+        <service android:enabled="true" android:name="com.example.mobileappforblind.UserPresentActivity.BackgroundService" />
 
     </application>
 </manifest>

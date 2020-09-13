@@ -5,14 +5,12 @@ import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.mobileappforblind.ScreenOnOffActivity.BackgroundService;
-import com.example.mobileappforblind.ScreenOnOffActivity.ScreenOnOffReceiver;
+import com.example.mobileappforblind.UserPresentActivity.BackgroundService;
 
 public class StartupActivity extends AppCompatActivity {
     private static int SPLASH_TIME_OUT = 2500;
@@ -23,7 +21,6 @@ public class StartupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_startup);
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
 
         Intent backgroundService = new Intent(getApplicationContext(), BackgroundService.class);
         startForegroundService(backgroundService);
@@ -34,7 +31,6 @@ public class StartupActivity extends AppCompatActivity {
         super.onDestroy();
 
         welcome.release();
-        Log.d(ScreenOnOffReceiver.SCREEN_TOGGLE_TAG, "Activity onDestroy");
     }
 
     @Override
